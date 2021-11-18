@@ -26,11 +26,16 @@ AProjectTedCharacter::AProjectTedCharacter()
 	// Create a camera boom attached to the root (capsule)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
+	//ArrowComponent从ACharacter中继承而来，它决定人物的真实朝向，不管人物动画怎样，只要arrow没变，人物的朝向就不会变。
+	//这一条决定了不管人物自身怎么转，摄像机都是不会转的。除非单独调整摄像机。
 	CameraBoom->SetUsingAbsoluteRotation(true); // Rotation of the character should not affect rotation of boom
 	CameraBoom->bDoCollisionTest = false;
-	CameraBoom->TargetArmLength = 500.f;
+	//Ted: 从默认500改成800，后续再调
+	CameraBoom->TargetArmLength = 800.f;
 	CameraBoom->SocketOffset = FVector(0.f,0.f,75.f);
-	CameraBoom->SetRelativeRotation(FRotator(0.f,180.f,0.f));
+	//Ted: 这个180度决定摄像机照人物哪一边。在场景中调整人物的转向，摄像机因为使用的是绝对旋转，是不受影响的。
+	//这个-15度是摄像机的俯仰角，改成-15时观察体验更好，这个后续可以再调。
+	CameraBoom->SetRelativeRotation(FRotator(-15.f,180.f,0.f));
 
 	// Create a camera and attach to boom
 	SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
