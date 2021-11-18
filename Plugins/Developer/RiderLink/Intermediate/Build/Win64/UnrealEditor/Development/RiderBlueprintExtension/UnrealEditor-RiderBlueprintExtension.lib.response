@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-RiderBlueprintExtension.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UE5Projects\ProjectTed\Intermediate\Build\Win64\ProjectTedEditor\Development\UnrealEd\SharedPCH.UnrealEd.RTTI.ShadowErrors.h.obj"
+"D:\UE5Projects\ProjectTed\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprintExtension\Module.RiderBlueprintExtension.cpp.obj"
+"D:\UE5Projects\ProjectTed\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprintExtension\Default.rc2.res"
+/OUT:"D:\UE5Projects\ProjectTed\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\Development\RiderBlueprintExtension\UnrealEditor-RiderBlueprintExtension.lib"
+/INCLUDE:IMPLEMENT_MODULE_RiderBlueprintExtension
