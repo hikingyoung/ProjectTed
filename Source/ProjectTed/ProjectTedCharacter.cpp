@@ -62,6 +62,7 @@ AProjectTedCharacter::AProjectTedCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 100000;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false; //不受控制器，如鼠标，影响朝向。这样按上也不会面向上了。
 	GetCharacterMovement()->bOrientRotationToMovement = false; //不与加速方向对齐，这样往上移动时就不会向上了。
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
