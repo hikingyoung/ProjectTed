@@ -13,17 +13,17 @@
 //////////////////////////////////////////////////////////////////////////
 // AProjectTedCharacter
 
-AProjectTedCharacter::AProjectTedCharacter(const FObjectInitializer* ObjectInitializer):
-Super(ObjectInitializer->SetDefaultSubobjectClass<UTed25DSideScrollCharMovementComp>(CharacterMovementComponentName))
+AProjectTedCharacter::AProjectTedCharacter(const FObjectInitializer& ObjectInitializer):
+Super(ObjectInitializer.SetDefaultSubobjectClass<UTed25DSideScrollCharMovementComp>(ACharacter::CharacterMovementComponentName))
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-
+	
 	// Don't rotate when the controller rotates.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false;
-
+	bUseControllerRotationRoll = false; 
+	
 	// Create a camera boom attached to the root (capsule)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -37,25 +37,26 @@ Super(ObjectInitializer->SetDefaultSubobjectClass<UTed25DSideScrollCharMovementC
 	//Ted: 这个180度决定摄像机照人物哪一边。在场景中调整人物的转向，摄像机因为使用的是绝对旋转，是不受影响的。
 	//这个-15度是摄像机的俯仰角，改成-15时观察体验更好，这个后续可以再调。
 	CameraBoom->SetRelativeRotation(FRotator(-15.f,180.f,0.f));
-
+	
 	// Create a camera and attach to boom
 	SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
 	SideViewCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	SideViewCameraComponent->bUsePawnControlRotation = false; // We don't want the controller rotating the camera
-
+	
 	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Face in the direction we are moving..
+	//GetCharacterMovement()->bOrientRotationToMovement = true; // Face in the direction we are moving..
 	//GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f); // ...at this rotation rate. Overried Downbelow by Ted.
 	GetCharacterMovement()->GravityScale = 2.f;
 	GetCharacterMovement()->AirControl = 0.80f;
-	GetCharacterMovement()->JumpZVelocity = 1000.f;
+	//GetCharacterMovement()->JumpZVelocity = 1000.f;
+	GetCharacterMovement()->JumpZVelocity=2000.f;
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 	
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
-
+	
 	//Ted： Set these for 2.5D side scroller.
 	GetCharacterMovement()->RotationRate = FRotator(0.f, -1.f, 0.f);
 	GetCharacterMovement()->MaxAcceleration = 100000;
@@ -71,6 +72,7 @@ void AProjectTedCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	//ted
+	Ted25DSideScrollCharMovementComp = Cast<UTed25DSideScrollCharMovementComp>(Super::GetCharacterMovement());
 }
 
 //////////////////////////////////////////////////////////////////////////

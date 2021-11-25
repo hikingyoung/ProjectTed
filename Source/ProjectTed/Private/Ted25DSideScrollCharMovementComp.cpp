@@ -6,14 +6,15 @@
 FRotator UTed25DSideScrollCharMovementComp::ComputeOrientToMovementRotation(const FRotator& CurrentRotation,
 	float DeltaTime, FRotator& DeltaRotation) const
 {
-	//先将加速的X方向归零，这样角色移动时朝向不变。同时也不影响实际加速。
+	//先将加速的X方向归零，这样角色移动时朝向被更改了（一直面向左或右）。但不影响实际加速。
 	const FVector Ted25DSideScrollAcceleration = FVector(0,Acceleration.Y,0);
 	if (Ted25DSideScrollAcceleration.SizeSquared() < KINDA_SMALL_NUMBER)
 	{
 		// AI path following request can orient us in that direction (it's effectively an acceleration)
 		if (bHasRequestedVelocity && RequestedVelocity.SizeSquared() > KINDA_SMALL_NUMBER)
 		{
-			return RequestedVelocity.GetSafeNormal().Rotation();
+			const FVector TedRequestedVelocity = FVector(0, RequestedVelocity.Y, 0);
+			return TedRequestedVelocity.GetSafeNormal().Rotation();
 		}
 
 		// Don't change rotation if there is no acceleration.
