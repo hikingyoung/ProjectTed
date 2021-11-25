@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Ted25DSideScrollCharMovementComp.h"
 #include "ProjectTedCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -37,10 +38,17 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-
+private:
+	UTed25DSideScrollCharMovementComp* Ted25DSideScrollCharMovementComp;
+public:
+	UFUNCTION(BlueprintCallable, Category ="Ted25DSideScroller")
+	//FORCEINLINE强制内联。 尾置const表示此方法不可更改调用者本身。
+	FORCEINLINE class UTed25DSideScrollCharMovementComp* GetTed25DSideScrollCharMovementComp() const { return Ted25DSideScrollCharMovementComp; }
 	public:
-	AProjectTedCharacter();
-
+	AProjectTedCharacter(const FObjectInitializer* ObjectInitializer);
+	
+	virtual void PostInitializeComponents() override;
+	
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/

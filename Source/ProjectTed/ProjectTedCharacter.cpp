@@ -7,13 +7,14 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h" //原先无需
-
+#include "Ted25DSideScrollCharMovementComp.h"
 
 
 //////////////////////////////////////////////////////////////////////////
 // AProjectTedCharacter
 
-AProjectTedCharacter::AProjectTedCharacter()
+AProjectTedCharacter::AProjectTedCharacter(const FObjectInitializer* ObjectInitializer):
+Super(ObjectInitializer->SetDefaultSubobjectClass<UTed25DSideScrollCharMovementComp>(CharacterMovementComponentName))
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -52,7 +53,6 @@ AProjectTedCharacter::AProjectTedCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 	
-	
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
@@ -61,8 +61,16 @@ AProjectTedCharacter::AProjectTedCharacter()
 	GetCharacterMovement()->MaxAcceleration = 100000;
 	GetCharacterMovement()->BrakingDecelerationWalking = 100000;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false; //不受控制器，如鼠标，影响朝向。这样按上也不会面向上了。
-	GetCharacterMovement()->bOrientRotationToMovement = false; //不与加速方向对齐，这样往上移动时就不会向上了。
-	
+	GetCharacterMovement()->bOrientRotationToMovement = true; //2021.11.18不与加速方向对齐，这样往上移动时就不会向上了。 //2021.11.19 因为更改了底层计算加速方向的方式，详见Ted25DSideScrollCharMoveComp.cpp, 所以改为true.
+	//Ted：set this true then when you go near a wall, your sight will no longer be blocked by the wall,
+	//just become closer to root component(usually it's a character body)
+	GetCameraBoom()->bDoCollisionTest = true;
+}
+
+void AProjectTedCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	//ted
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -88,7 +96,7 @@ void AProjectTedCharacter::MoveRight(float Value)
 
 	//Ted人物的朝向不受控制器也不受加速方向影响（按向上不转向，也可以做后跳，侧步等技能）。整个人物唯一会改变方向的可能就在此处。
 	//同时也带来新的问题，就是如果怪物也以此为蓝本，因为怪物是不存在按键的，它们移动的时候要如何处理？？
-	this->SetActorRotation(FRotator(0.f,-90*Value/abs(Value),0.f)); //TODO：这里有分母为0陷阱。暂时还未报错。
+	//this->SetActorRotation(FRotator(0.f,-90*Value/abs(Value),0.f));//因为底层加速方向的算法改了，所以暂时注释此行来测试 //TODO：这里有分母为0陷阱。暂时还未报错。
 }
 
 //Ted
