@@ -15,8 +15,6 @@ class AProjectTedCharacter : public ACharacter
 public:
 	//AProjectTedCharacter(); 定义了下在这个构造函数，本行这个就可以省略了。
 	AProjectTedCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	
-	virtual void PostInitializeComponents() override;
 
 public:
 	/** Side view camera */
@@ -45,13 +43,10 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-private:
-	UTed25DSideScrollCharMovementComp* Ted25DSideScrollCharMovementComp;
+
 public:
 	UFUNCTION(BlueprintCallable, Category ="Ted25DSideScroller")
 	//FORCEINLINE强制内联。 尾置const表示此方法不可更改调用者本身。
-	FORCEINLINE class UTed25DSideScrollCharMovementComp* GetTed25DSideScrollCharMovementComp() const { return Ted25DSideScrollCharMovementComp; }
-	
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/

@@ -49,7 +49,7 @@ Super(ObjectInitializer.SetDefaultSubobjectClass<UTed25DSideScrollCharMovementCo
 	GetCharacterMovement()->GravityScale = 2.f;
 	GetCharacterMovement()->AirControl = 0.80f;
 	//GetCharacterMovement()->JumpZVelocity = 1000.f;
-	GetCharacterMovement()->JumpZVelocity=2000.f;
+	GetCharacterMovement()->JumpZVelocity=1000.f;
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
@@ -66,13 +66,6 @@ Super(ObjectInitializer.SetDefaultSubobjectClass<UTed25DSideScrollCharMovementCo
 	//Ted：set this true then when you go near a wall, your sight will no longer be blocked by the wall,
 	//just become closer to root component(usually it's a character body)
 	GetCameraBoom()->bDoCollisionTest = true;
-}
-
-void AProjectTedCharacter::PostInitializeComponents()
-{
-	Super::PostInitializeComponents();
-	//ted
-	Ted25DSideScrollCharMovementComp = Cast<UTed25DSideScrollCharMovementComp>(Super::GetCharacterMovement());
 }
 
 //////////////////////////////////////////////////////////////////////////
