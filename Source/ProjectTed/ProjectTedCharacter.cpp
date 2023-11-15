@@ -22,7 +22,7 @@ Super(ObjectInitializer.SetDefaultSubobjectClass<UTed25DSideScrollCharMovementCo
 	// Don't rotate when the controller rotates.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false; 
+	bUseControllerRotationRoll = false;
 	
 	// Create a camera boom attached to the root (capsule)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -99,6 +99,7 @@ void AProjectTedCharacter::MoveUp(float Value)
 {	
 	//add movement in that direction。 Ted 回头这里要处理右上一起按的数值问题，根号2大于1.
 	AddMovementInput(FVector(-1.f, 0.f, 0.f), Value);
+
 }
 
 

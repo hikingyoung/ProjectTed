@@ -6,7 +6,8 @@
 FRotator UTed25DSideScrollCharMovementComp::ComputeOrientToMovementRotation(const FRotator& CurrentRotation,
 	float DeltaTime, FRotator& DeltaRotation) const
 {
-	//先将加速的X方向归零，这样角色移动时朝向被更改了（一直面向左或右）。但不影响实际加速。
+	//在实际场景中，人物的朝向和Y轴正方向重合。也就是说Y轴是左右，X是向内向外，Z是上下。
+	//这里将加速的X方向归零，向内向外移动不再能影响到朝向，会一直面向左或右。但不影响实际加速。
 	const FVector Ted25DSideScrollAcceleration = FVector(0,Acceleration.Y,0);
 	if (Ted25DSideScrollAcceleration.SizeSquared() < KINDA_SMALL_NUMBER)
 	{
