@@ -76,4 +76,5 @@ DerivedDataCache/*
 # Chosen by Ted
 .vsconfig
 ./Plugins/Developer/*
-Platform/*
+Platforms/*
+Plugins/Developer/RiderLink/*
