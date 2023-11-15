@@ -72,3 +72,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Chosen by Ted
+.vsconfig
+./Plugins/Developer/*
+Platform/*
